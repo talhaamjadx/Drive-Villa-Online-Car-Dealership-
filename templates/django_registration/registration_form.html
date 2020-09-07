@@ -1,0 +1,16 @@
+{% extends "auth_layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="registeration-form-container mt-5" style="margin-bottom: 100px;">
+    <h3>Create Your DriveVilla Account</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button type="submit" class="btn btn-block btn-primary">Create Account</button>
+    </form>
+    <center><p class="mt-3">or <a href="{% url 'login' %}">Login</a></p></center>
+</div>
+
+{% endblock %}

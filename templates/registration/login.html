@@ -1,0 +1,16 @@
+{% extends "auth_layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="login-form-container mt-5" style="border: 1px solid black; padding: 20px 50px 20px 50px; border-radius: 10px;">
+    <h1>Login</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <center><button type="submit" class="btn btn-block btn-primary">Login</button></center>
+    </form>
+    <center><p class="mt-3">or <a href="{% url 'django_registration_register' %}">Register</a></p></center>
+</div>
+
+{% endblock %}
