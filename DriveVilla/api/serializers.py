@@ -12,16 +12,20 @@ class ActiveUserSerializer(serializers.ModelSerializer):
 class ChatBotSerializer(serializers.ModelSerializer):
     response  = serializers.SerializerMethodField(read_only=True)
     customer = serializers.SerializerMethodField(read_only=True)
+    seller = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = ChatBotMessage
-        fields = ['message', 'response', 'customer']
+        fields = ['message', 'response', 'customer', 'seller']
 
     def get_response(self, instance):
         return instance.response
 
     def get_customer(self, instance):
         return instance.customer.username
+
+    def get_seller(self, instance):
+        return instance.ad_seller.username
 
 class ThreadSerializer(serializers.ModelSerializer):
     sender_name = serializers.SerializerMethodField(read_only= True)

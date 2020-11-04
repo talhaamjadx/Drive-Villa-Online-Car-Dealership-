@@ -12,6 +12,7 @@ import Seller from ".././components/seller";
 import EditProfile from ".././components/editProfile";
 import Chat from ".././components/chat";
 import Message from ".././components/message";
+import SellerAI from ".././components/sellerAI";
 
 Vue.use(VueRouter);
 
@@ -76,6 +77,11 @@ const routes = [
     path: "/chat",
     name: "Messages",
     component: Message,
+  },
+  {
+    path: "/seller-ai/:seller_name",
+    name: "SellerAI",
+    component: SellerAI,
   },
 ];
 

@@ -66,6 +66,20 @@
                 Contact Seller
               </v-btn>
             </v-col>
+            <v-col class="d-flex justify-center">
+              <v-btn
+                class=""
+                style="text-decoration:none"
+                color="secondary"
+                v-if="results.seller_name"
+              >
+                <router-link
+                  style="text-decoration:none; color:white"
+                  :to="{ name: 'SellerAI', params: { seller_name: results.seller_name } }"
+                  >Seller AI</router-link
+                >
+              </v-btn>
+            </v-col>
           </v-card>
         </v-col>
       </v-row>

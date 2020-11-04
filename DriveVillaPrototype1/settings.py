@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -55,6 +54,8 @@ INSTALLED_APPS = [
     'webpack_loader',
     'versatileimagefield',
     'channels',
+    'django_celery_results',
+    # 'DriveVilla.apps.StartupCodeConfig',
 ]
 
 MIDDLEWARE = [
@@ -193,3 +194,8 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
+
+#celery_settings
+CELERY_BROKER_URL = 'redis://localhost'
+CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_IMPORTS = ("DriveVilla.tasks",)

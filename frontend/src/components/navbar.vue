@@ -1,16 +1,20 @@
 <template>
   <v-card color="grey lighten-4" flat height="70px" tile>
     <v-toolbar dense>
-      <v-toolbar-title>Drive Villa</v-toolbar-title>
+      <v-toolbar-title>
+        <router-link to="/" style="text-decoration:none; color:black">
+          Drive Villa
+        </router-link>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text class="mr-2" to="/" style="text-decoration:none" outlined>
-        <router-link style="text-decoration:none" :to="{ name: 'Home' }"
-          >Home</router-link
-        >
-      </v-btn>
-
-      <v-btn text class="mr-2" to="/post" style="text-decoration:none" outlined>
-        <router-link style="text-decoration:none" to="/post"
+      <v-btn
+        text
+        class="mr-2"
+        to="/post"
+        style="text-decoration:none"
+        depressed
+      >
+        <router-link style="text-decoration:none; color:grey" to="/post"
           >Post an Ad!</router-link
         >
       </v-btn>
@@ -18,11 +22,11 @@
         text
         class="mr-2"
         to="/advertisements"
-        style="text-decoration:none"
-        outlined
+        style="text-decoration:none;"
+        depressed
       >
         <router-link
-          style="text-decoration:none"
+          style="text-decoration:none; color:grey"
           :to="{ name: 'Advertisement' }"
           >Advertisements</router-link
         >
@@ -34,9 +38,11 @@
         class="mr-2"
         to="/chat"
         style="text-decoration:none"
-        outlined
+        depressed
       >
-        <router-link style="text-decoration:none" :to="{ name: 'Messages' }"
+        <router-link
+          style="text-decoration:none; color:grey"
+          :to="{ name: 'Messages' }"
           >Messages</router-link
         >
       </v-btn>

@@ -11,7 +11,9 @@ class ChatBotMessage(models.Model):
     message  = models.CharField(max_length= 300)
     response = models.CharField(max_length= 300)
     customer = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE)
+        CustomUser, on_delete=models.CASCADE, related_name= "ad_customer")
+    ad_seller = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name= "ad_seller")
 
 class Thread(models.Model):
     sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name = "thread_sender")

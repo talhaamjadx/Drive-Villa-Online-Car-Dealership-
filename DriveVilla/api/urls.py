@@ -7,7 +7,7 @@ from DriveVilla.api.views import (VehicleRUDAPIView, SellerCreateListAPIView, Se
                                   AnswerRUDAPIView, AdvertisementViewSet, UserGetAPIView,
                                   AdImageListCreateAPIView, AdImageRUDAPIView, SellerAdListAPIView,
                                   CustomUserViewSet, CurrentUserRUDAPIView, ChatMessageAPIView,
-                                  ChatMessageRUDAPIView, ThreadListAPIView,  ActiveUserAPIView, ChatBotAPIView)
+                                  ChatMessageRUDAPIView, ThreadListAPIView,  ActiveUserAPIView, ChatBotListAPIView, ChatBotListCreateAPIView)
 
 router = DefaultRouter()
 router.register(r"advertisements", AdvertisementViewSet)
@@ -16,8 +16,9 @@ router2 = DefaultRouter()
 router2.register(r"custom-users", CustomUserViewSet)
 
 urlpatterns = [
+     path('chatbot/<str:seller_name>/', ChatBotListCreateAPIView.as_view()),
      path('active/<str:username>/', ActiveUserAPIView.as_view()),
-    path('chatbot/', ChatBotAPIView.as_view()),
+    path('chatbot/', ChatBotListAPIView.as_view()),
     path('thread/', ThreadListAPIView.as_view()),
     path('chat-message/<int:id>/', ChatMessageRUDAPIView.as_view()),
     path('chat-message/<str:reciepent_name>/', ChatMessageAPIView.as_view()),

@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.generics import (ListCreateAPIView, RetrieveUpdateDestroyAPIView,
-                                     get_object_or_404, ListAPIView, Http404, RetrieveAPIView)
+                                     get_object_or_404, ListAPIView, Http404, RetrieveAPIView, CreateAPIView)
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -20,7 +20,7 @@ from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from rest_framework.viewsets import ModelViewSet
 from model.ConversationCreator import chatConversation
 from model.model import CreateUpdateChatbot, LoadChatBot, PredictReply
-
+from DriveVilla import tasks
 
 class ActiveUserAPIView(ListAPIView):
     serializer_class = ActiveUserSerializer
@@ -33,42 +33,44 @@ class ActiveUserAPIView(ListAPIView):
         return active
 
 
-class ChatBotAPIView(ListCreateAPIView):
+class ChatBotListAPIView(ListAPIView):
 
     serializer_class = ChatBotSerializer
     queryset = ChatBotMessage.objects.all()
+    # cuda = tasks.createUser.delay('hello', 'talha')
+
+    # def perform_create(self, serializer):
+
+    #     message = self.request.data['message']
+    #     user = self.request.user
+    #     result = tasks.getResponse.delay(message, user.username)
+    #     print(result)
+    #     response = result.get(propagate = False)
+    #     serializer.save(response=response, customer = user)
+
+class ChatBotListCreateAPIView(ListCreateAPIView):
+    serializer_class = ChatBotSerializer
+    
+    def get_queryset(self):
+        buyer = self.request.user
+        seller_name = self.kwargs['seller_name']
+        seller = CustomUser.objects.get(username= seller_name)
+        print(buyer)
+        print(seller)
+        messages = ChatBotMessage.objects.filter(customer = buyer, ad_seller = seller)
+        print(messages)
+        return messages
 
     def perform_create(self, serializer):
-
+        seller_name = self.kwargs['seller_name']
+        seller = CustomUser.objects.get(username= seller_name)
+        print(seller)
+        buyer = self.request.user
+        print(buyer)
         message = self.request.data['message']
-        user = self.request.user
-        print(user)
-        # id = self.request.data['customer']
-        # user = CustomUser.objects.get(id = id)
-        
-
-        response = ""
-        customer_number="0123456789"
-        txt=chatConversation("Toyota","secondhand","2016","400 miles", "3000 $", "2000 $"," 1500 $")
-
-        if len(txt)%2 !=0:
-            txt.append(" Thank you for viewing the car. If you have any query, please do contact ")
-
-        name = user.username
-        # CreateUpdateChatbot(name,txt)
-        model=LoadChatBot(name)
-        import pickle as p
-        fileaddress="model/Dictionary/"+ name+".p"
-        with open(fileaddress,"rb") as f: 
-            dictionary=p.load(f)
-        try:
-            inp = message
-
-            reply=PredictReply(model,inp,dictionary)
-            response = str(reply)
-        except: 
-            print("Commmunication Error! Pleasse try again later.") 
-        serializer.save(response=response, customer = user)
+        result = tasks.getResponse.delay(message, buyer.username)
+        response = result.get(propagate = False)
+        serializer.save(customer = buyer, ad_seller = seller, response = response)
 
 
 class ThreadListAPIView(ListAPIView):
