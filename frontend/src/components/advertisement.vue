@@ -40,6 +40,7 @@ export default {
   },
   async mounted() {
     await this.getApiData();
+    // this.$store.dispatch('Test/testAction')
   },
   methods: {
     getApiData() {
