@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     getApiData() {
-      axios
+      return axios
         .get("http://127.0.0.1:8000/api/advertisements/" + this.id.toString(), {
           headers: {
             // 'Authorization': 'Token 5be274af6d7e24741e747d359ed910eda61a86fc',
@@ -138,7 +138,7 @@ export default {
     },
 
     remove() {
-      axios
+      return axios
         .delete(
           "http://127.0.0.1:8000/api/advertisements/" + this.id.toString(),
           {
@@ -159,7 +159,7 @@ export default {
       this.$router.push({ name: "EditAd" });
     },
     getUser() {
-      axios
+      return axios
         .get("http://127.0.0.1:8000/api/user/", {
           headers: {
             "X-CSRFTOKEN": csrftoken,
@@ -172,7 +172,7 @@ export default {
         .catch((error) => console.log(error));
     },
     getImages() {
-      axios
+      return axios
         .get(
           "http://127.0.0.1:8000/api/advertisements/" +
             this.id.toString() +
