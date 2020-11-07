@@ -38,13 +38,14 @@ export default {
         )
         .then((res) => {
           this.results = res.data;
+          console.log("image", this.results)
           this.$store.state.ad_image.push(res.data[0].image);
         })
         .catch((error) => console.log(error));
     },
   },
-  created() {
-    this.getImage();
+  async mounted() {
+    await this.getImage();
   },
 };
 </script>

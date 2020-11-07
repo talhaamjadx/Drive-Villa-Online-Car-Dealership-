@@ -38,11 +38,11 @@ export default {
   components: {
     "image-comp": Image,
   },
-  created() {
-    this.getApiData();
+  async mounted() {
+    await this.getApiData();
   },
   methods: {
-    async getApiData() {
+    getApiData() {
       axios
         .get("http://127.0.0.1:8000/api/advertisements/", {
           headers: {

@@ -185,6 +185,7 @@ export default {
         )
         .then((res) => {
           this.images = res.data;
+          console.log("this.images", this.images)
         })
         .catch((error) => console.log(error));
     },
@@ -192,10 +193,10 @@ export default {
       this.$router.push({ name: "Seller", params: { seller_id: seller_id } });
     },
   },
-  created() {
-    this.getApiData();
-    this.getImages();
-    this.getUser();
+  async mounted() {
+    await this.getApiData();
+    await this.getImages();
+    await this.getUser();
   },
 };
 </script>
